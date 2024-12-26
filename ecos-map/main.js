@@ -1,100 +1,81 @@
 import './style.css';
-import { Map, View } from 'ol';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
+import Map from 'ol/Map.js';
+import OSM from 'ol/source/OSM.js';
+import TileLayer from 'ol/layer/Tile.js';
+import View from 'ol/View.js';
+import GPX from 'ol/format/GPX.js';
+import {Vector as VectorLayer} from 'ol/layer.js';
+import VectorSource from 'ol/source/Vector.js';
+import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style.js';
+import GroupLayer from 'ol/layer/Group';
+import Google from 'ol/source/Google';
+import { defaults as defaultControls} from 'ol/control.js';
+import {extend} from 'ol/extent';
+import {createEmpty} from 'ol/extent';
 
+const gpxFiles = ["ECOS_mapping_preride.gpx", "ECOS_nature_guide_data_collection.gpx", "Gravel_river_loop.gpx","fells_loop.gpx"];
 
+const style = {
+  'Point': new Style({
+    image: new CircleStyle({
+      fill: new Fill({
+        color: 'rgba(255,255,0,0.4)',
+      }),
+      radius: 5,
+      stroke: new Stroke({
+        color: '#ff0',
+        width: 1,
+      }),
+    }),
+  }),
+  'LineString': new Style({
+    stroke: new Stroke({
+      color: '#f00',
+      width: 5,
+    }),
+  }),
+  'MultiLineString': new Style({
+    stroke: new Stroke({
+      color: 'red',
+      width: 5,
+    }),
+  }),
+};
+
+const gpxLayers = new GroupLayer({
+  layers: [],
+  name: 'gpxGroup'
+})
+;
 const map = new Map({
   target: 'map',
+  //controls: defaultControls().extend([new SwitchLayerControl({}, gpxFiles)]),
   layers: [
+    gpxLayers,
     new TileLayer({
-      source: new OSM()
-    })
+      source: new OSM(),
+    }),
   ],
   view: new View({
-    center: [0, 0],
-    zoom: 2
-  })
+    center: [0,0],
+    zoom: 12,
+  }),
 });
 
+var ext = createEmpty();
 
-window.onload = function () {
-  var defaultStyle = {
-    'Point': new ol.style.Style({
-      image: new ol.style.Circle({
-        fill: new ol.style.Fill({
-          color: 'rgba(255,255,0,0.5)'
-        }),
-        radius: 5,
-        stroke: new ol.style.Stroke({
-          color: '#ff0',
-          width: 1
-        })
-      })
+gpxFiles.forEach((gpxName) => {
+  var lay = new VectorLayer({
+    source: new VectorSource({
+      url: "./trails/"+gpxName,
+      format: new GPX(),
     }),
-    'LineString': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: '#f00',
-        width: 3
-      })
-    }),
-    'Polygon': new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: 'rgba(0,255,255,0.5)'
-      }),
-      stroke: new ol.style.Stroke({
-        color: '#0ff',
-        width: 1
-      })
-    }),
-    'MultiPoint': new ol.style.Style({
-      image: new ol.style.Circle({
-        fill: new ol.style.Fill({
-          color: 'rgba(255,0,255,0.5)'
-        }),
-        radius: 5,
-        stroke: new ol.style.Stroke({
-          color: '#f0f',
-          width: 1
-        })
-      })
-    }),
-    'MultiLineString': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: '#00f',
-        width: 3
-      })
-    }),
-    'MultiPolygon': new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: 'rgba(25,120,255,0.5)'
-      }),
-      stroke: new ol.style.Stroke({
-        color: '#00f',
-        width: 1
-      })
-    })
-  };
-
-  var styleFunction = function (feature, resolution) {
-    var featureStyleFunction = feature.getStyleFunction();
-    if (featureStyleFunction) {
-      return featureStyleFunction.call(feature, resolution);
-    } else {
-      return defaultStyle[feature.getGeometry().getType()];
-    }
-  };
-  var vector1 = new ol.layer.Vector({
-    source: new ol.source.Vector({
-      url: 'trails/ECOS_mapping_preride.gpx',
-      format: new ol.format.GPX()
-    }),
-    style: defaultStyle
+    style: function (feature) {
+      return style[feature.getGeometry().getType()];
+    },
   });
-
-  map.addLayer(new ol.layer.Vector({
-    renderMode: 'image',
-    source: vector1,
-    style: styleFunction
-  }));
-}
+  lay.getSource().getFormat().readFeatures();
+  gpxLayers.getLayers().push(lay);
+  extend(ext, lay.getSource().getExtent());
+});
+//map.getView().fit(ext, map.getSize());
