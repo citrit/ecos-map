@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenLayers Map with Layer Control and GPX Support</title>
+    <link rel="stylesheet" href="./node_modules/ol/ol.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="map" class="map"></div>
+    <div id="layerMenu" class="layer-menu">
+        <h3>Layers</h3>
+        <label><input type="checkbox" id="osmLayer" checked> OpenStreetMap</label><br>
+        <label><input type="checkbox" id="bingLayer"> Bing Maps</label><br>
+        <input type="file" id="gpxFile" accept=".gpx,.kml">
+        <div id="gpxLayers"></div>
+        <div id="styleEditor" class="style-editor">
+            <h3>Style Editor</h3>
+            <label for="layerSelect">Select Layer:</label>
+            <select id="layerSelect"></select><br>
+            <label for="strokeColor">Stroke Color:</label>
+            <input type="color" id="strokeColor" value="#0000ff"><br>
+            <label for="strokeWidth">Stroke Width:</label>
+            <input type="number" id="strokeWidth" value="2" min="1" max="10"><br>
+            <button id="applyStyle">Apply Style</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/ol/ol.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

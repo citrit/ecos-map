@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_bb723b6106632155513a3a7c19ea6732 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_bb723b6106632155513a3a7c19ea6732" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_bb723b6106632155513a3a7c19ea6732 = L
+            .map(
+                "map_bb723b6106632155513a3a7c19ea6732",
+                {
+                    center: [42.56934885384616, -74.42409052307693],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 10,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_2eec5b7a3e81a41e7a8d5c5758ce8fb1 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+            var circle_marker_745f3899ceeed5993c01eafcc5d839f2 = L.circleMarker(
+                [42.460112, -74.495293],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_0d6f4550042f7b704662ce9506b4122a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_12f8e6d191bfbd4925b77819a968adca = $(`<div id="html_12f8e6d191bfbd4925b77819a968adca" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=26>Blenheim Hill State Forest </a><br><br><a href=https://www.google.com/maps/place/Blenheim+Hill+State+Forest,+North+Blenheim,+NY+12131/@42.4522199,-74.5162122,14z/data=!3m1!4b1!4m6!3m5!1s0x89dc38cd97cb6171:0xc156f7b041427306!8m2!3d42.4510907!4d-74.4965215!16s%2Fg%2F11bvtdzxh6!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_0d6f4550042f7b704662ce9506b4122a.setContent(html_12f8e6d191bfbd4925b77819a968adca);
+            
+        
+
+        circle_marker_745f3899ceeed5993c01eafcc5d839f2.bindPopup(popup_0d6f4550042f7b704662ce9506b4122a)
+        ;
+
+        
+    
+    
+            var circle_marker_002e2d7b714a97ae879092d3eb3fef3a = L.circleMarker(
+                [42.5512, -74.4938],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_7b8ffea443f5b2da20b7e79868f8801e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9a1fbc69a112a9220dbf881c57d52e07 = $(`<div id="html_9a1fbc69a112a9220dbf881c57d52e07" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=28>Burnt Rossman State Forest </a><br><br><a href=https://www.google.com/maps/place/Burnt-Rossman+Hills+State+Forest/@42.5250087,-74.4961662,17z/data=!3m1!4b1!4m6!3m5!1s0x89dc3c75ec87a98f:0x9e0cc4dc51abbcd!8m2!3d42.5250087!4d-74.4935913!16s%2Fg%2F1tg2lnrh!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_7b8ffea443f5b2da20b7e79868f8801e.setContent(html_9a1fbc69a112a9220dbf881c57d52e07);
+            
+        
+
+        circle_marker_002e2d7b714a97ae879092d3eb3fef3a.bindPopup(popup_7b8ffea443f5b2da20b7e79868f8801e)
+        ;
+
+        
+    
+    
+            var circle_marker_55a34f66d7b7dc9b9b86c001fb63c2d2 = L.circleMarker(
+                [42.629, -74.2702],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_942c3dc666f02a223e496705b3886391 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3f7111a67c8f49a057f4fcf4e0a65f1b = $(`<div id="html_3f7111a67c8f49a057f4fcf4e0a65f1b" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=32>Cotton Hill and Dutch Settlement State Forests </a><br><br><a href=https://www.google.com/maps/place/Cotton+Hill+State+Forest,+Schoharie,+NY+12157/@42.6133796,-74.3643058,13z/data=!3m1!4b1!4m6!3m5!1s0x89dc2c131a9acf8f:0x42024c8544793317!8m2!3d42.6091642!4d-74.298621!16s%2Fg%2F11bvtdq15t!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_942c3dc666f02a223e496705b3886391.setContent(html_3f7111a67c8f49a057f4fcf4e0a65f1b);
+            
+        
+
+        circle_marker_55a34f66d7b7dc9b9b86c001fb63c2d2.bindPopup(popup_942c3dc666f02a223e496705b3886391)
+        ;
+
+        
+    
+    
+            var circle_marker_596aeecf74b7fd0f1be9851cec2eaa72 = L.circleMarker(
+                [42.539901, -74.299004],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_fe83df968f5b4098b4a6496f71207691 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_eb40acd77181da6ba845c8289a2bf098 = $(`<div id="html_eb40acd77181da6ba845c8289a2bf098" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=34>Franklingon Vlaie </a><br><br><a href=https://www.google.com/maps/place/Franklinton+Vlaie+Wildlife+Management+Area/@42.5355217,-74.3059663,17z/data=!3m1!4b1!4m6!3m5!1s0x89dc3222707172fd:0xc0d826f8d501f5ff!8m2!3d42.5355217!4d-74.3033914!16s%2Fg%2F11df0qvmvg!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_fe83df968f5b4098b4a6496f71207691.setContent(html_eb40acd77181da6ba845c8289a2bf098);
+            
+        
+
+        circle_marker_596aeecf74b7fd0f1be9851cec2eaa72.bindPopup(popup_fe83df968f5b4098b4a6496f71207691)
+        ;
+
+        
+    
+    
+            var circle_marker_383860942b731d834447cb07ec2dd673 = L.circleMarker(
+                [42.7832221, -74.2724298],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_2af52a99326e82b80e8b704548822ee4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_67f54d42e47ea286c0cb617e22073d42 = $(`<div id="html_67f54d42e47ea286c0cb617e22073d42" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=36>Landis Arboretum </a><br><br><a href=https://www.google.com/maps/place/Landis+Arboretum/@42.7833001,-74.2707077,17.5z/data=!4m6!3m5!1s0x89de86d74e56a575:0xdbb4198143ae2e31!8m2!3d42.7831577!4d-74.2700853!16zL20vMDV0cGI3!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_2af52a99326e82b80e8b704548822ee4.setContent(html_67f54d42e47ea286c0cb617e22073d42);
+            
+        
+
+        circle_marker_383860942b731d834447cb07ec2dd673.bindPopup(popup_2af52a99326e82b80e8b704548822ee4)
+        ;
+
+        
+    
+    
+            var circle_marker_bb6eb6dbbb5b0bcf3d37aa8d71528165 = L.circleMarker(
+                [42.46141, -74.34636],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_76f19e5296e5bf85f1523ce3c28f58a2 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_e4536087b8d7bd3c4fc86e71bd80ba75 = $(`<div id="html_e4536087b8d7bd3c4fc86e71bd80ba75" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=40>Leonard Hill State Forest </a><br><br><a href=https://www.google.com/maps/place/Leonard+Hill+State+Forest,+Gilboa,+NY+12076/@42.4627208,-74.3566217,14z/data=!3m1!4b1!4m6!3m5!1s0x89dc36c0125de803:0x1bc32b2fc3d61739!8m2!3d42.4570666!4d-74.3323529!16s%2Fg%2F11bvtbtb3b!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_76f19e5296e5bf85f1523ce3c28f58a2.setContent(html_e4536087b8d7bd3c4fc86e71bd80ba75);
+            
+        
+
+        circle_marker_bb6eb6dbbb5b0bcf3d37aa8d71528165.bindPopup(popup_76f19e5296e5bf85f1523ce3c28f58a2)
+        ;
+
+        
+    
+    
+            var circle_marker_b121b4e1430a2bb9bb6aac9bd19a7f1c = L.circleMarker(
+                [42.55125, -74.49384],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_25348a603668286b9d68d3bda5a381b5 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8a2f16d59f235e74c160c956165c9e3a = $(`<div id="html_8a2f16d59f235e74c160c956165c9e3a" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=42>Looking Glass Pond </a><br><br><a href=https://www.google.com/maps/place/Looking+Glass+Pond/@42.5512275,-74.4962882,17z/data=!3m1!4b1!4m6!3m5!1s0x89dc3b634e8a275d:0x3e54643949332c4e!8m2!3d42.5512275!4d-74.4937133!16s%2Fg%2F119tzs0_h!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_25348a603668286b9d68d3bda5a381b5.setContent(html_8a2f16d59f235e74c160c956165c9e3a);
+            
+        
+
+        circle_marker_b121b4e1430a2bb9bb6aac9bd19a7f1c.bindPopup(popup_25348a603668286b9d68d3bda5a381b5)
+        ;
+
+        
+    
+    
+            var circle_marker_618782d4de7702e557bdd4a0e910c05f = L.circleMarker(
+                [42.59914, -74.61975],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_a801e02658822eb5af00fc6b4c813fe4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1cc0bf156295736975e86d804eeb354a = $(`<div id="html_1cc0bf156295736975e86d804eeb354a" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=46>Lutheranville State Forest </a><br><br><a href=https://www.google.com/maps/place/Lutheranville+State+Forest,+Richmondville,+NY+12149/@42.6090362,-74.6424898,14z/data=!3m1!4b1!4m6!3m5!1s0x89dc183c0fb09e1d:0xecee8b12d5483fb8!8m2!3d42.611779!4d-74.6195474!16s%2Fg%2F11bvt9yvxd!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_a801e02658822eb5af00fc6b4c813fe4.setContent(html_1cc0bf156295736975e86d804eeb354a);
+            
+        
+
+        circle_marker_618782d4de7702e557bdd4a0e910c05f.bindPopup(popup_a801e02658822eb5af00fc6b4c813fe4)
+        ;
+
+        
+    
+    
+            var circle_marker_ed2fec78a9e87737138a0380e7ca4fa0 = L.circleMarker(
+                [42.5911, -74.5243],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_05a851896699da1d27477f6ce7f4be70 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_601d6fade80fb0130ce5e9d8d01345b1 = $(`<div id="html_601d6fade80fb0130ce5e9d8d01345b1" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=48>Mallet Pond State Forest </a><br><br><a href=https://www.google.com/maps/place/Mallet+Pond+State+Forest,+Richmondville,+NY+12149/@42.5827598,-74.5512149,13z/data=!3m1!4b1!4m6!3m5!1s0x89dc235266da0ca3:0xe85e65c77277bc9a!8m2!3d42.5857145!4d-74.5170319!16s%2Fg%2F11bvth_44f!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_05a851896699da1d27477f6ce7f4be70.setContent(html_601d6fade80fb0130ce5e9d8d01345b1);
+            
+        
+
+        circle_marker_ed2fec78a9e87737138a0380e7ca4fa0.bindPopup(popup_05a851896699da1d27477f6ce7f4be70)
+        ;
+
+        
+    
+    
+            var circle_marker_e4fd665b1b1042e81275e01cf47286ed = L.circleMarker(
+                [42.43357, -74.46758],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_9d2a0b0e89fa3d847eb67de4eccf448c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1b5f3ef960ada6d2293cc43ca58a5a91 = $(`<div id="html_1b5f3ef960ada6d2293cc43ca58a5a91" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=50>Mine Kill State Park </a><br><br><a href=https://www.google.com/maps/place/Mine+Kill+State+Park/@42.4345905,-74.4660971,17z/data=!3m1!4b1!4m6!3m5!1s0x89dc388e4003409d:0x47c28e9729d1823b!8m2!3d42.4345905!4d-74.4635222!16zL20vMDh6aDB3!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_9d2a0b0e89fa3d847eb67de4eccf448c.setContent(html_1b5f3ef960ada6d2293cc43ca58a5a91);
+            
+        
+
+        circle_marker_e4fd665b1b1042e81275e01cf47286ed.bindPopup(popup_9d2a0b0e89fa3d847eb67de4eccf448c)
+        ;
+
+        
+    
+    
+            var circle_marker_62fe622964ce907f0e8501e8eb83df52 = L.circleMarker(
+                [42.58384, -74.43669],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_4241267f601390eb0d43c67cf3dc3a66 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c8fd5ec6324b1b86d30cf9cdc4951de6 = $(`<div id="html_c8fd5ec6324b1b86d30cf9cdc4951de6" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=54>Patria State Forest </a><br><br><a href=https://www.google.com/maps/place/Patria+State+Forest,+Middleburgh,+NY+12122/@42.5901733,-74.4668891,13z/data=!3m1!4b1!4m6!3m5!1s0x89dc256ba5bd0777:0x4900ebfd04b65ade!8m2!3d42.5962991!4d-74.4379073!16s%2Fg%2F11bvtc5dzj!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_4241267f601390eb0d43c67cf3dc3a66.setContent(html_c8fd5ec6324b1b86d30cf9cdc4951de6);
+            
+        
+
+        circle_marker_62fe622964ce907f0e8501e8eb83df52.bindPopup(popup_4241267f601390eb0d43c67cf3dc3a66)
+        ;
+
+        
+    
+    
+            var circle_marker_2c4d36fe46eb989ba05ef48f9368357f = L.circleMarker(
+                [42.62328, -74.43611],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_8feebfd8a63291092f4bee5899b55377 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_49724f3e51ccb09e969710532cd862d5 = $(`<div id="html_49724f3e51ccb09e969710532cd862d5" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=56>Petersberg State Forest </a><br><br><a href=https://www.google.com/maps/place/Petersburg+State+Forest,+Warnerville,+NY+12187/@42.6248468,-74.4681287,14z/data=!3m1!4b1!4m6!3m5!1s0x89dc25b412134da5:0xaa3d024d11d512d3!8m2!3d42.6249971!4d-74.4379073!16s%2Fg%2F11bvthy8gq!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_8feebfd8a63291092f4bee5899b55377.setContent(html_49724f3e51ccb09e969710532cd862d5);
+            
+        
+
+        circle_marker_2c4d36fe46eb989ba05ef48f9368357f.bindPopup(popup_8feebfd8a63291092f4bee5899b55377)
+        ;
+
+        
+    
+    
+            var circle_marker_a6199bedee357efcfa609ebd682d12aa = L.circleMarker(
+                [42.59451, -74.35782],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_bb723b6106632155513a3a7c19ea6732);
+        
+    
+        var popup_4b948518a76d7f61856cdffe329202f1 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_7a08012991c9bd5ba9a3284d30f135c5 = $(`<div id="html_7a08012991c9bd5ba9a3284d30f135c5" style="width: 100.0%; height: 100.0%;"><a href=https://ecosny.org/wp-content/uploads/2024/11/schoharie_guide.pdf#page=58>Vrooman's Nose </a><br><br><a href=https://www.google.com/maps/place/Vroman's+Nose+Hiking+Trail/@42.5947001,-74.3767479,15z/data=!3m1!4b1!4m6!3m5!1s0x89dc2e54d66a6b2f:0x12060c6eafec4356!8m2!3d42.5947016!4d-74.358294!16s%2Fm%2F0479cnl!5m1!1e3?entry=ttu&g_ep=EgoyMDI0MTEwNS4wIKXMDSoASAFQAw%3D%3D>Google Maps </a></div>`)[0];
+                popup_4b948518a76d7f61856cdffe329202f1.setContent(html_7a08012991c9bd5ba9a3284d30f135c5);
+            
+        
+
+        circle_marker_a6199bedee357efcfa609ebd682d12aa.bindPopup(popup_4b948518a76d7f61856cdffe329202f1)
+        ;
+
+        
+    
+</script>
+</html>
