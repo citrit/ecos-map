@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,13 @@
     <link rel="stylesheet" href="./node_modules/ol/ol.css">
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <div id="map" class="map"></div>
+    <div id="popup" class="ol-popup">
+        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content"></div>
+    </div>
     <div id="layerMenu" class="layer-menu">
         <h3>Layers</h3>
         <label><input type="checkbox" id="osmLayer" checked> OpenStreetMap</label><br>
@@ -25,8 +31,10 @@
             <input type="number" id="strokeWidth" value="2" min="1" max="10"><br>
             <button id="applyStyle">Apply Style</button>
         </div>
+        <span id="status">&nbsp;0 selected features</span>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/ol/ol.js"></script>
     <script type="module" src="script.js"></script>
 </body>
+
 </html>

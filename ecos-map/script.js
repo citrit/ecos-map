@@ -9,7 +9,40 @@ import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX';
 import KML from 'ol/format/KML';
 import { Style, Stroke, Circle, Fill } from 'ol/style';
-import { LineString, Polygon } from 'ol/geom';
+import Overlay from 'ol/Overlay.js';
+import { toLonLat } from 'ol/proj.js';
+import { toStringHDMS } from 'ol/coordinate.js';
+import Select from 'ol/interaction/Select.js';
+import { altKeyOnly, click, pointerMove } from 'ol/events/condition.js';
+
+/**
+ * Elements that make up the popup.
+ */
+const container = document.getElementById('popup');
+const content = document.getElementById('popup-content');
+const closer = document.getElementById('popup-closer');
+
+/**
+ * Create an overlay to anchor the popup to the map.
+ */
+const overlay = new Overlay({
+    element: container,
+    autoPan: {
+        animation: {
+            duration: 250,
+        },
+    },
+});
+
+/**
+ * Add a click handler to hide the popup.
+ * @return {boolean} Don't follow the href.
+ */
+closer.onclick = function () {
+    overlay.setPosition(undefined);
+    closer.blur();
+    return false;
+};
 
 // Create map layers
 const osmLayer = new TileLayer({
@@ -29,6 +62,7 @@ const bingLayer = new TileLayer({
 const map = new Map({
     target: 'map',
     layers: [osmLayer, bingLayer],
+    overlays: [overlay],
     view: new View({
         center: [0, 0],
         zoom: 2
@@ -95,7 +129,7 @@ document.getElementById('gpxFile').addEventListener('change', function (event) {
                 vectorLayer.setVisible(this.checked);
             });
             layerLabel.appendChild(layerCheckbox);
-            layerLabel.appendChild(document.createTextNode(` GPX Layer ${e.target.fileName}`));
+            layerLabel.appendChild(document.createTextNode(fname));
             gpxLayersDiv.appendChild(layerLabel);
             gpxLayersDiv.appendChild(document.createElement('br'));
 
@@ -103,7 +137,7 @@ document.getElementById('gpxFile').addEventListener('change', function (event) {
             const layerSelect = document.getElementById('layerSelect');
             const layerOption = document.createElement('option');
             layerOption.value = gpxLayers.length - 1;
-            layerOption.text = `GPX Layer ${gpxLayers.length}`;
+            layerOption.text = fname;
             layerSelect.appendChild(layerOption);
 
             map.getView().fit(vectorSource.getExtent(), { padding: [50, 50, 50, 50] });
@@ -118,22 +152,91 @@ document.getElementById('applyStyle').addEventListener('click', function () {
     const strokeColor = document.getElementById('strokeColor').value;
     const strokeWidth = parseInt(document.getElementById('strokeWidth').value, 10);
     const newStyle = new Style({
-        // stroke: new Stroke({
-        //     color: strokeColor,
-        //     width: strokeWidth
-        // }),
-        lineString: new LineString({
+        stroke: new Stroke({
             color: strokeColor,
             width: strokeWidth
-        }),
-        // polygon: new Polygon({
-        //     color: strokeColor,
-        //     width: strokeWidth
-        // }),
-        // circle: new Circle({
-        //     color: strokeColor,
-        //     width: strokeWidth
-        // })
+        })
     });
     gpxLayers[selectedLayerIndex].setStyle(newStyle);
+});
+
+/**
+ * Add a click handler to the map to render the popup.
+ */
+// map.on('singleclick', function (evt) {
+//     const coordinate = evt.coordinate;
+//     const hdms = toStringHDMS(toLonLat(coordinate));
+
+//     content.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
+//     overlay.setPosition(coordinate);
+// });
+
+// Select stuff
+//
+let select = null; // ref to currently selected interaction
+
+const selected = new Style({
+    fill: new Fill({
+        color: '#eeeeee',
+    }),
+    stroke: new Stroke({
+        color: 'rgba(13, 12, 12, 0.7)',
+        width: 5,
+        lineDash: [4, 8],
+        lineDashOffset: 6
+    }),
+});
+
+function selectStyle(feature) {
+    const color = feature.get('COLOR') || '#eeeeee';
+    selected.getFill().setColor(color);
+    return selected;
+}
+
+// select interaction working on "click"
+const selectClick = new Select({
+    condition: click,
+    style: selectStyle,
+});
+
+map.addInteraction(selectClick);
+selectClick.on('select', function (e) {
+    if (e.selected.length > 0) {
+        var coord = e.mapBrowserEvent.coordinate;
+        const msg =
+            '&nbsp;' +
+            e.target.getFeatures().getLength() +
+            ' selected features (last operation selected ' +
+            e.selected.length +
+            ' and deselected ' +
+            e.deselected.length +
+            ' features)';
+        document.getElementById('status').innerHTML = msg;
+        //content.innerHTML = `<p>Selected features: </p><code> ${msg} </code>`;
+
+        var selectedFeature = e.selected[0]; // Get the first selected feature (if any)
+
+        content.innerHTML = '';
+        if (selectedFeature) {
+            var props = selectedFeature.getProperties();
+            for (var propertyName in props) {
+                switch (propertyName) {
+                    case "geometry":
+                        break;
+                    case "name":
+                        content.innerHTML += `<br><b>Name: ${props[propertyName]}</b><br>`;
+                        break;
+                    default:
+                        content.innerHTML += `<br>${propertyName}: ${props[propertyName]}`;
+                        break;
+
+                }
+            }; // Access feature properties
+        }
+
+        overlay.setPosition(coord);
+    }
+    else {
+        closer.onclick();
+    }
 });
