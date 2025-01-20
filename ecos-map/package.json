@@ -1,12 +1,17 @@
 {
   "name": "ecos-map",
   "version": "1.0.0",
+  "homepage": "https://github.com/citrit/ecos-map/tree/main/ecos-map/ecos-map.html",
+  "type": "module",
   "scripts": {
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d dist",
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "vite": "^6.0.6"
   },
   "dependencies": {
