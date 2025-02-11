@@ -4,6 +4,7 @@ import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import BingMaps from 'ol/source/BingMaps';
+import XYZ from 'ol/source/XYZ';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX';
@@ -50,6 +51,11 @@ const osmLayer = new TileLayer({
     visible: true
 });
 
+const images = new TileLayer({ 
+    source: new XYZ({ crossOrigin: null, urls: ['https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}'] }), 
+    visible: false 
+});
+
 const bingLayer = new TileLayer({
     source: new BingMaps({
         key: 'Your Bing Maps API Key Here',
@@ -61,7 +67,7 @@ const bingLayer = new TileLayer({
 // Create the map
 const map = new Map({
     target: 'map',
-    layers: [osmLayer, bingLayer],
+    layers: [osmLayer, images],
     overlays: [overlay],
     view: new View({
         center: [0, 0],
@@ -74,8 +80,8 @@ document.getElementById('osmLayer').addEventListener('change', function () {
     osmLayer.setVisible(this.checked);
 });
 
-document.getElementById('bingLayer').addEventListener('change', function () {
-    bingLayer.setVisible(this.checked);
+document.getElementById('images').addEventListener('change', function () {
+    images.setVisible(this.checked);
 });
 
 // Store GPX layers
