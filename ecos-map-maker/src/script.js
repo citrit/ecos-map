@@ -10,15 +10,15 @@ const closer = document.getElementById('popup-closer');
  * Create an overlay to anchor the popup to the map.
  */
 const overlay = new ol.Overlay({
-    element: container,
-    autoPan: {
-        animation: {
-            duration: 250,
-        },
+  element: container,
+  autoPan: {
+    animation: {
+      duration: 250,
     },
+  },
 });
 
- 
+
 /**
  * Add a click handler to hide the popup.
  * @return {boolean} Don't follow the href.
@@ -35,13 +35,13 @@ const osmLayer = new ol.layer.Tile({
   visible: true
 });
 
-const terr = new ol.layer.Tile({ 
-  source: new ol.source.XYZ({ crossOrigin: null, urls: ['https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}'] }), 
-  visible: false 
+const terr = new ol.layer.Tile({
+  source: new ol.source.XYZ({ crossOrigin: "Anonymous", urls: ['https://maps.refuges.info/hiking/{z}/{x}/{y}.png'] }),
+  visible: false
 });
 
 const roads = new ol.layer.Tile({
-  source:new ol.source.TileWMS({crossOrigin:null,url:'https://gisservices.its.ny.gov/arcgis/services/NYS_Streets/MapServer/WmsServer',hidpi:false,params:{'FORMAT':'image/png32','TRANSPARENT':'TRUE','VERSION':'1.3.0','LAYERS':'13,14,15,12,2,5,8,1,11,4,7,10,3,6,9'},attributions: 'NYS GIS Clearinghouse'}),
+  source: new ol.source.TileWMS({ crossOrigin: "Anonymous", url: 'https://gisservices.its.ny.gov/arcgis/services/NYS_Streets/MapServer/WmsServer', hidpi: false, params: { 'FORMAT': 'image/png32', 'TRANSPARENT': 'FALSE', 'VERSION': '1.3.0', 'LAYERS': '13,14,15,12,2,5,8,1,11,4,7,10,3,6,9' }, attributions: 'NYS GIS Clearinghouse' }),
   visible: false
 });
 
@@ -51,8 +51,8 @@ const map = new ol.Map({
   layers: [osmLayer, terr, roads],
   overlays: [overlay],
   view: new ol.View({
-      center: [0, 0],
-      zoom: 2
+    center: [0, 0],
+    zoom: 2
   })
 });
 
@@ -60,8 +60,48 @@ const map = new ol.Map({
 var printControl = new ol.control.Print();
 map.addControl(printControl);
 
+// CanvasScaleLine control
+var scaleLineControl = new ol.control.CanvasScaleLine({ minWidth: 128 });
+map.addControl(scaleLineControl);
+
+// CanvasTitle control
+var titleControl = new ol.control.CanvasTitle();
+map.addControl(titleControl);
+
+var siteName;
+
+function doExport(e) {
+  //printControl.print({ imageType: 'image/png', fileName: siteName });
+  map.canvas.toBlob(function (blob) {
+    saveAs(blob, e.fileName + e.imageType.replace('image/', ''));
+  }, e.imageType);
+}
+
+var parsed_csv = null;
+$.get('./csv/area_list.csv', function (csv_data) {
+  parsed_csv = $.csv.toObjects(csv_data);
+});
+
+var currentSite = 0;
 document.getElementById('export-png').addEventListener('click', function () {
-  printControl.print({ imageType: 'image/png'});
+      var element = parsed_csv[currentSite];
+      //console.log(parsed_data);
+      titleControl.setTitle(element.Site);
+      var ll = element.latlong.split(',');
+      // Converting lat long to mercator projection
+      var proj_lat_long = ol.proj.fromLonLat([Number.parseFloat(ll[1]), Number.parseFloat(ll[0])]);
+
+      // Zoom to lat lon
+      map.setView(
+        new ol.View({
+          center: proj_lat_long,
+          zoom: 16
+        }));
+      //map.updateSize();
+      printControl.print({ imageType: 'image/png', fileName: element.Site});
+      //doExport({ imageType: 'image/png', fileName: element.Site});
+      currentSite++;
+      document.getElementById('printstatus').innerHTML = "Printed: " + currentSite + " of " + parsed_csv.length;
 });
 
 
@@ -85,64 +125,64 @@ const gpxLayers = [];
 document.getElementById('gpxFile').addEventListener('change', function (event) {
   const file = event.target.files[0];
   if (file) {
-      const reader = new FileReader();
-      const fname = file.name;
-      reader.onload = function (e) {
-          const fileData = e.target.result;
-          var fileFormat = null;
-          if (fname.endsWith('.gpx')) {
-              fileFormat = new ol.format.GPX();
-          }
-          else {
-              fileFormat = new ol.format.KML();
-          }
-          const features = fileFormat.readFeatures(fileData, {
-              featureProjection: 'EPSG:3857'
-          });
+    const reader = new FileReader();
+    const fname = file.name;
+    reader.onload = function (e) {
+      const fileData = e.target.result;
+      var fileFormat = null;
+      if (fname.endsWith('.gpx')) {
+        fileFormat = new ol.format.GPX();
+      }
+      else {
+        fileFormat = new ol.format.KML();
+      }
+      const features = fileFormat.readFeatures(fileData, {
+        featureProjection: 'EPSG:3857'
+      });
 
-          const vectorSource = new ol.source.Vector({
-              features: features
-          });
+      const vectorSource = new ol.source.Vector({
+        features: features
+      });
 
-          const vectorLayer = new ol.layer.Vector({
-              source: vectorSource,
-              style: new ol.style.Style({
-                  stroke: new ol.style.Stroke({
-                      color: '#0000ff',
-                      width: 2
-                  })
-              })
-          });
+      const vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        style: new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: '#0000ff',
+            width: 2
+          })
+        })
+      });
 
-          map.addLayer(vectorLayer);
-          gpxLayers.push(vectorLayer);
+      map.addLayer(vectorLayer);
+      gpxLayers.push(vectorLayer);
 
-          // Add the GPX layer to the menu
-          const gpxLayersDiv = document.getElementById('gpxLayers');
-          const layerId = `gpxLayer${gpxLayers.length}`;
-          const layerLabel = document.createElement('label');
-          const layerCheckbox = document.createElement('input');
-          layerCheckbox.type = 'checkbox';
-          layerCheckbox.id = layerId;
-          layerCheckbox.checked = true;
-          layerCheckbox.addEventListener('change', function () {
-              vectorLayer.setVisible(this.checked);
-          });
-          layerLabel.appendChild(layerCheckbox);
-          layerLabel.appendChild(document.createTextNode(fname));
-          gpxLayersDiv.appendChild(layerLabel);
-          gpxLayersDiv.appendChild(document.createElement('br'));
+      // Add the GPX layer to the menu
+      const gpxLayersDiv = document.getElementById('gpxLayers');
+      const layerId = `gpxLayer${gpxLayers.length}`;
+      const layerLabel = document.createElement('label');
+      const layerCheckbox = document.createElement('input');
+      layerCheckbox.type = 'checkbox';
+      layerCheckbox.id = layerId;
+      layerCheckbox.checked = true;
+      layerCheckbox.addEventListener('change', function () {
+        vectorLayer.setVisible(this.checked);
+      });
+      layerLabel.appendChild(layerCheckbox);
+      layerLabel.appendChild(document.createTextNode(fname));
+      gpxLayersDiv.appendChild(layerLabel);
+      gpxLayersDiv.appendChild(document.createElement('br'));
 
-          // Add layer to style editor select
-          const layerSelect = document.getElementById('layerSelect');
-          const layerOption = document.createElement('option');
-          layerOption.value = gpxLayers.length - 1;
-          layerOption.text = fname;
-          layerSelect.appendChild(layerOption);
+      // Add layer to style editor select
+      const layerSelect = document.getElementById('layerSelect');
+      const layerOption = document.createElement('option');
+      layerOption.value = gpxLayers.length - 1;
+      layerOption.text = fname;
+      layerSelect.appendChild(layerOption);
 
-          map.getView().fit(vectorSource.getExtent(), { padding: [50, 50, 50, 50] });
-      };
-      reader.readAsText(file);
+      map.getView().fit(vectorSource.getExtent(), { padding: [50, 50, 50, 50] });
+    };
+    reader.readAsText(file);
   }
 });
 
@@ -152,10 +192,10 @@ document.getElementById('applyStyle').addEventListener('click', function () {
   const strokeColor = document.getElementById('strokeColor').value;
   const strokeWidth = parseInt(document.getElementById('strokeWidth').value, 10);
   const newStyle = new ol.style.Style({
-      stroke: new ol.style.Stroke({
-          color: strokeColor,
-          width: strokeWidth
-      })
+    stroke: new ol.style.Stroke({
+      color: strokeColor,
+      width: strokeWidth
+    })
   });
   gpxLayers[selectedLayerIndex].setStyle(newStyle);
 });
@@ -177,13 +217,13 @@ let select = null; // ref to currently selected interaction
 
 const selected = new ol.style.Style({
   fill: new ol.style.Fill({
-      color: '#eeeeee',
+    color: '#eeeeee',
   }),
   stroke: new ol.style.Stroke({
-      color: 'rgba(13, 12, 12, 0.7)',
-      width: 5,
-      lineDash: [4, 8],
-      lineDashOffset: 6
+    color: 'rgba(13, 12, 12, 0.7)',
+    width: 5,
+    lineDash: [4, 8],
+    lineDashOffset: 6
   }),
 });
 
@@ -202,47 +242,47 @@ const selectClick = new ol.interaction.Select({
 map.addInteraction(selectClick);
 selectClick.on('select', function (e) {
   if (e.selected.length > 0) {
-      var coord = e.mapBrowserEvent.coordinate;
-      const msg =
-          '&nbsp;' +
-          e.target.getFeatures().getLength() +
-          ' selected features (last operation selected ' +
-          e.selected.length +
-          ' and deselected ' +
-          e.deselected.length +
-          ' features)';
-      document.getElementById('status').innerHTML = msg;
-      //content.innerHTML = `<p>Selected features: </p><code> ${msg} </code>`;
+    var coord = e.mapBrowserEvent.coordinate;
+    const msg =
+      '&nbsp;' +
+      e.target.getFeatures().getLength() +
+      ' selected features (last operation selected ' +
+      e.selected.length +
+      ' and deselected ' +
+      e.deselected.length +
+      ' features)';
+    document.getElementById('status').innerHTML = msg;
+    //content.innerHTML = `<p>Selected features: </p><code> ${msg} </code>`;
 
-      var selectedFeature = e.selected[0]; // Get the first selected feature (if any)
+    var selectedFeature = e.selected[0]; // Get the first selected feature (if any)
 
-      content.innerHTML = '';
-      if (selectedFeature) {
-          var props = selectedFeature.getProperties();
-          for (var propertyName in props) {
-              switch (propertyName) {
-                  case "geometry":
-                      break;
-                  case "name":
-                      content.innerHTML += `<br><b>Name: ${props[propertyName]}</b><br>`;
-                      break;
-                  default:
-                      content.innerHTML += `<br>${propertyName}: ${props[propertyName]}`;
-                      break;
+    content.innerHTML = '';
+    if (selectedFeature) {
+      var props = selectedFeature.getProperties();
+      for (var propertyName in props) {
+        switch (propertyName) {
+          case "geometry":
+            break;
+          case "name":
+            content.innerHTML += `<br><b>Name: ${props[propertyName]}</b><br>`;
+            break;
+          default:
+            content.innerHTML += `<br>${propertyName}: ${props[propertyName]}`;
+            break;
 
-              }
-          }; // Access feature properties
-      }
+        }
+      }; // Access feature properties
+    }
 
-      overlay.setPosition(coord);
+    overlay.setPosition(coord);
   }
   else {
-      closer.onclick();
+    closer.onclick();
   }
 });
 
 /* On print > save image file */
-printControl.on('print', function(e) {
+printControl.on('print', function (e) {
   // Print success
   if (e.canvas) {
     if (e.pdf) {
@@ -254,14 +294,14 @@ printControl.on('print', function(e) {
       });
       pdf.addImage(e.image, 'JPEG', e.print.position[0], e.print.position[0], e.print.imageWidth, e.print.imageHeight);
       pdf.save();
-    } else  {
+    } else {
       /*
       $('img.result').remove();
       $('<img>').addClass('result').attr('src', e.image).appendTo('body');
       return;
       */
-      e.canvas.toBlob(function(blob) {
-        saveAs(blob, 'map.'+e.imageType.replace('image/',''));
+      e.canvas.toBlob(function (blob) {
+        saveAs(blob, e.fileName + e.imageType.replace('image/', ''));
       }, e.imageType);
     }
   } else {
