@@ -95,7 +95,7 @@ document.getElementById('export-png').addEventListener('click', function () {
       map.setView(
         new ol.View({
           center: proj_lat_long,
-          zoom: 16
+          zoom: Number.parseInt(element.Zoom)
         }));
       //map.updateSize();
       printControl.print({ imageType: 'image/png', fileName: element.Site});
