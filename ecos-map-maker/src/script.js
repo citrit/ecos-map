@@ -64,16 +64,22 @@ map.addControl(printControl);
 var scaleLineControl = new ol.control.CanvasScaleLine({ minWidth: 128 });
 map.addControl(scaleLineControl);
 
-// CanvasTitle control
-var titleControl = new ol.control.CanvasTitle();
-map.addControl(titleControl);
+const titleOverlay = new ol.Overlay({
+  element: document.getElementById('map-title-overlay'),
+  position: ol.proj.fromLonLat([0, 0]),
+  positioning: 'top-center',
+  stopEvent: false,
+});
+
+map.addOverlay(titleOverlay);
+document.getElementById('map-title-overlay').style.display = 'block'; // Make it visible
 
 var siteName;
 
 function doExport(e) {
   //printControl.print({ imageType: 'image/png', fileName: siteName });
   map.canvas.toBlob(function (blob) {
-    saveAs(blob, e.fileName + e.imageType.replace('image/', ''));
+    saveAs(blob, e.fileName + e.imageType.replace('image/png', ''));
   }, e.imageType);
 }
 
@@ -86,8 +92,10 @@ var currentSite = 0;
 document.getElementById('export-png').addEventListener('click', function () {
       var element = parsed_csv[currentSite];
       //console.log(parsed_data);
-      titleControl.setTitle(element.Site);
-      var ll = element.latlong.split(',');
+      //titleControl.setTitle(element.Site);
+      
+      var ll = element['lat/long'];
+      ll = ll.split(',');
       // Converting lat long to mercator projection
       var proj_lat_long = ol.proj.fromLonLat([Number.parseFloat(ll[1]), Number.parseFloat(ll[0])]);
 
@@ -134,7 +142,9 @@ document.getElementById('gpxFile').addEventListener('change', function (event) {
         fileFormat = new ol.format.GPX();
       }
       else {
-        fileFormat = new ol.format.KML();
+        fileFormat = new ol.format.KML({
+          extractStyles: false // Key step: ignore KML styles
+        });
       }
       const features = fileFormat.readFeatures(fileData, {
         featureProjection: 'EPSG:3857'

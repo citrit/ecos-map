@@ -7662,6 +7662,7 @@ ol.control.CanvasTitle = class olcontrolCanvasTitle extends ol.control.CanvasBas
    */
   setVisible(b) {
     this.element.style.display = (b ? 'block' : 'none');
+    this.element.style.visibility = (b ? 'visible' : 'hidden');
     if (this.getMap()) {
       try { this.getMap().renderSync(); } catch (e) { /* ok */ }
     }
